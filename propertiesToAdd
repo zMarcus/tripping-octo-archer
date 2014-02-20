@@ -1,0 +1,30 @@
+openCV_facerec Property Pages
+
+>Configuration Properties > Additional Library Directories > 
+	.add C:\opencv\build\x86\vc10\lib
+	.add C:\opencv\build\x86\vc11\lib
+
+>C/C++ > Additional Include Directories >
+	.add C:\opencv\build\include\opencv2
+	.add C:\opencv\build\include\opencv
+	.add C:\opencv\build\include\
+
+>Linker > Additional Include Directories >
+	.add C:\opencv\build\x86\vc11\lib
+	.add C:\opencv\build\x86\vc10\lib
+
+>Linker > Input >
+	.add opencv_contrib246.lib
+	.add opencv_core246.lib
+	.add opencv_highgui246.lib
+	.add opencv_imgproc246.lib
+	
+	.additionally, add these;
+	
+  	  opencv_contrib246.lib
+      opencv_core246d.lib
+      opencv_highgui246d.lib
+      opencv_imgproc246d.lib
+      opencv_objdetect246d.lib
+      opencv_video246d.lib
+      opencv_ml246d.lib
