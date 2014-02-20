@@ -1,0 +1,9 @@
+Project Properties > Linker > Input > Additional Dependencies
+
+opencv_contrib246.lib
+opencv_core246d.lib
+opencv_highgui246d.lib
+opencv_imgproc246d.lib
+opencv_objdetect246d.lib
+opencv_video246d.lib
+opencv_ml246d.lib
