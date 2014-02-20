@@ -1,0 +1,48 @@
+----------------------------------------------------
+
+	openCV_facerec Property Pages
+	
+----------------------------------------------------
+
+>Configuration Properties > Additional Library Directories > 
+	.add C:\opencv\build\x86\vc10\lib
+	.add C:\opencv\build\x86\vc11\lib
+
+>C/C++ > Additional Include Directories >
+	.add C:\opencv\build\include\opencv2
+	.add C:\opencv\build\include\opencv
+	.add C:\opencv\build\include\
+
+>Linker > Additional Include Directories >
+	.add C:\opencv\build\x86\vc11\lib
+	.add C:\opencv\build\x86\vc10\lib
+
+>Linker > Input >
+	.add opencv_contrib246.lib
+	.add opencv_core246.lib
+	.add opencv_highgui246.lib
+	.add opencv_imgproc246.lib
+	
+	.additionally, add these;
+	
+      opencv_contrib246.lib
+      opencv_core246d.lib
+      opencv_highgui246d.lib
+      opencv_imgproc246d.lib
+      opencv_objdetect246d.lib
+      opencv_video246d.lib
+      opencv_ml246d.lib
+
+
+----------------------------------------------------
+
+	Notes on the .csv
+	
+----------------------------------------------------
+
+Start with an index 0, format should look like this:
+
+C:\Users\MyPC\Documents\Visual Studio 2010\projects\openCV_facerec\x64\Debug\img\image1.jpg;0
+C:\Users\MyPC\Documents\Visual Studio 2010\projects\openCV_facerec\x64\Debug\img\image2.jpg;0
+C:\Users\MyPC\Documents\Visual Studio 2010\projects\openCV_facerec\x64\Debug\img\image3.jpg;1
+C:\Users\MyPC\Documents\Visual Studio 2010\projects\openCV_facerec\x64\Debug\img\image4.jpg;1
