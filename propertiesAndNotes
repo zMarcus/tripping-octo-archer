@@ -23,7 +23,7 @@
 	.add opencv_highgui246.lib
 	.add opencv_imgproc246.lib
 	
-	.additionally, add these;
+	.additionally, add these to [Project Properties > Linker > Input > Additional Dependencies];
 	
       opencv_contrib246.lib
       opencv_core246d.lib
