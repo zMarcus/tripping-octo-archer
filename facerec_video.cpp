@@ -1,6 +1,4 @@
 /*
- * facerec_video.cpp
- *
  * Copyright (c) 2011. Philipp Wagner <bytefish[at]gmx[dot]de>.
  * Released to public domain under terms of the BSD Simplified license.
  *
@@ -17,14 +15,6 @@
  *
  *   See <http://www.opensource.org/licenses/bsd-license>
  */
- 
- /* ************************************
- 
-    OpenCV Fisherface recognition code edited to use Eigenface methods to recognize faces.
-      Original code can be found here:
-      http://docs.opencv.org/trunk/modules/contrib/doc/facerec/tutorial/facerec_video_recognition.html
-  
- ************************************* */
 
 #include <highgui\highgui.hpp>
 #include <contrib\contrib.hpp>
@@ -60,7 +50,7 @@ static void read_csv(const string& filename, vector<Mat>& images, vector<int>& l
         getline(liness, classlabel);
         if(!path.empty() && !classlabel.empty()) {
             images.push_back(imread(path, 0));
-            labels.push_back(atoi(classlabel.c_str()));
+            labels.push_back(atoi((classlabel.c_str())));
         }
     }
 }
@@ -71,17 +61,19 @@ int main(int argc, const char *argv[]) {
 
 	cout << "Test test" << endl;
 
-    if (argc != 4) {
+	
+    /*if (argc != 4) {
         cout << "usage: " << argv[0] << " </path/to/haar_cascade> </path/to/csv.ext> </path/to/device id>" << endl;
         cout << "\t </path/to/haar_cascade> -- Path to the Haar Cascade for face detection." << endl;
         cout << "\t </path/to/csv.ext> -- Path to the CSV file with the face database." << endl;
         cout << "\t <device id> -- The webcam device id to grab frames from." << endl;
-        exit(1);
-    }
+        exit(1);}*/
+    
+
     // Get the path to your CSV:
-    string fn_haar = string(argv[1]);
-    string fn_csv = string(argv[2]);
-    int deviceId = atoi(argv[3]);
+    string fn_haar = "haarcascade_frontalface_default.xml";
+    string fn_csv = "img/imagedatabase.csv";
+    int deviceId = 0;
     // These vectors hold the images and corresponding labels:
     vector<Mat> images;
     vector<int> labels;
@@ -123,6 +115,8 @@ int main(int argc, const char *argv[]) {
     // Get a handle to the Video device:
     VideoCapture cap(deviceId);
     // Check if we can use this device at all:
+
+
     if(!cap.isOpened()) {
         cerr << "Capture Device ID " << deviceId << "cannot be opened." << endl;
         return -1;
@@ -154,10 +148,7 @@ int main(int argc, const char *argv[]) {
             // .
             // I strongly encourage you to play around with the algorithms. See which work best
             // in your scenario, LBPH should always be a contender for robust face recognition.
-            //
-            // Since I am showing the Fisherfaces algorithm here, I also show how to resize the
-            // face you have just found:
-			//****************Fisherface code after creating the matrices*****************
+			//
             Mat face_resized;
             cv::resize(face, face_resized, Size(im_width, im_height), 1.0, 1.0, INTER_CUBIC);
             // Now perform the prediction, see how easy that is:
@@ -174,14 +165,33 @@ int main(int argc, const char *argv[]) {
             int pos_y = std::max(face_i.tl().y - 10, 0);
             // And now put it into the image:
             putText(original, box_text, Point(pos_x, pos_y), FONT_HERSHEY_PLAIN, 1, CV_RGB(0,255,0), 2);
+
+			string in_training = "Training...";
+			char key = (char) waitKey(20);
+			if (key == 16){
+			putText(original, in_training, Point(20, 100), FONT_HERSHEY_PLAIN, 1, CV_RGB(0,255,0), 2);
+			imwrite("img/newface.jpg", face);
+			}
         }
-        // Show the result:
-        imshow("face_recognizer", original);
-        // And display it:
-        char key = (char) waitKey(20);
+		string training_text = "Press 't' to begin training a new face.";
+		
+
+		putText(original, training_text, Point(20, 20), FONT_HERSHEY_PLAIN, 1, CV_RGB(0,255,0), 2); 
+        
+		// Wait for escape key to be pressed
+		char key = (char) waitKey(20);
+		
         // Exit this loop on escape:
-        if(key == 27)
+        if(key == 27){
             break;
+		} /*else if (key == 116){
+			
+		}*/
+
+		// Show the result:
+        imshow("face_recognizer", original);
+        
+
     }
     return 0;
 }
