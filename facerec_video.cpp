@@ -84,7 +84,6 @@ void EigenFace::AddNewPerson()
         stringstream liness(line);
         getline(liness, path, separator);
         getline(liness, classlabel);
-        
     }
         {
          char x;
@@ -100,7 +99,6 @@ void EigenFace::AddNewPerson()
          cout<<"name" <<endl;
          cin>>name;
         
-
          CvCapture* capture = cvCaptureFromCAM( CV_CAP_ANY );
          ofstream myfile;
          myfile.open("img/imagedatabase.csv",ios::app);
@@ -131,7 +129,6 @@ void EigenFace::AddNewPerson()
                      rectangle(original, face_i, CV_RGB(0, 255,0), 1);
                      imshow( "mywindow", original );
 
-                
                      // To save 30 images, changed 30 to 10
                      if (counter < 10) {
                          strcpy(path,("C:/Users/003836481/Documents/Visual Studio 2010/projects/openCV_facerec/x64/release/img/" + name).c_str()); //name of person in picture
@@ -140,8 +137,7 @@ void EigenFace::AddNewPerson()
                          strcat(path, jpg);
                          printf("Saving: %s\n", path);
                          
-                         
-                         //csv file save
+                         // CSV file save
                          myfile << path <<";" << y <<";" << name << endl;
 
                          imwrite(path, face);
@@ -155,30 +151,21 @@ void EigenFace::AddNewPerson()
                          counter++;
                          waitKey(500);
                      }
-                     
-                     
-                     
+
                      if (counter == 30)
                      {
                          cvDestroyWindow("mywindow");
 						 cvDestroyWindow("CameraCapture");
                          cvReleaseImage(&frame);
                          FaceDetect();
-                     }
-                 
-                 
+                     }                
                  }
-                
              }
 
              waitKey(33);
          }
-       
-         
+
          myfile.close();
-        
-         
-         
      }
  }
 
@@ -213,43 +200,40 @@ void EigenFace::FaceDetect()
         // nothing more we can do
         exit(1);
     }
- 
-    
 
 	if( images.empty() ) {
 		cout << "Error occured, image not read correctly" << endl;
 	}
+
     // Get the height from the first image. We'll need this
     // later in code to reshape the images to their original
     // size AND we need to reshape incoming faces to this size:
     int im_width = images[0].cols;
     int im_height = images[0].rows;
-    // Create a FaceRecognizer and train it on the given images:
-    
 
-    
-    
-    
-	//******************Change this to eigenface**********************
+    // Create a FaceRecognizer and train it on the given images:
     Ptr<FaceRecognizer> model = createEigenFaceRecognizer();
 	cout << "Created Eigenface model" << endl;
     model->train(images, labels);
-    
-	cout << "Training complete" << endl;
+	cout << "Training complete!" << endl;
+
     // That's it for learning the Face Recognition model. You now
     // need to create the classifier for the task of Face Detection.
-    // We are going to use the haar cascade you have specified in the
-    // command line arguments:
-    
+    // We are going to use the haar cascade included in the project
+	// file tree.
+	//
     CascadeClassifier haar_cascade;
     haar_cascade.load(fn_haar);
+
     // Get a handle to the Video device:
     VideoCapture cap(deviceId);
+
     // Check if we can use this device at all:
     if(!cap.isOpened()) {
         cerr << "Capture Device ID " << deviceId << "cannot be opened." << endl;
         return  ;
     }
+
     // Holds the current frame from the Video device:
     Mat frame;
     
@@ -262,35 +246,24 @@ void EigenFace::FaceDetect()
         // Convert the current frame to grayscale:
         Mat gray;
         namedWindow("");
-        
-		
-			/*
-            while (true) {
-                cap >> original;
-                
-                if(!original.empty()){
-                    
-                    break;
-                }
-                waitKey(33);
-                
-            }
-
-			*/
 		
         cvtColor(original,gray, CV_RGB2GRAY);
         
         // Find the faces in the frame:
         vector< Rect_<int> > faces;
         haar_cascade.detectMultiScale(gray, faces);
+
         // At this point you have the position of the faces in
-        // faces. Now we'll get the faces, make a prediction and
-        // annotate it in the video. Cool or what?
+        // vector faces. Now we'll get the faces, make a prediction
+        // and annotate it in the video. Cool or what?
         for(int i = 0; i < faces.size(); i++) {
+
             // Process face by face:
             Rect face_i = faces[i];
+
             // Crop the face from the image. So simple with OpenCV C++:
             Mat face = gray(face_i);
+
             // Resizing the face is necessary for Eigenfaces and Fisherfaces. You can easily
             // verify this, by reading through the face recognition tutorial coming with OpenCV.
             // Resizing IS NOT NEEDED for Local Binary Patterns Histograms, so preparing the
@@ -298,30 +271,26 @@ void EigenFace::FaceDetect()
             // 
             // I strongly encourage you to play around with the algorithms. See which work best
             // in your scenario, LBPH should always be a contender for robust face recognition.
-            //
-
+			//
             Mat face_resized;
             cv::resize(face, face_resized, Size(im_width, im_height), 1.0, 1.0, INTER_CUBIC);
             double predicted_confidence;
             int predicted;
-			//char buffer[33];
             model -> predict(face_resized,predicted, predicted_confidence);
 
+			// Create variables used for face prediction
             vector<Mat> images;
             vector<int>labels;
             string names;
             ifstream file("img/imagedatabase.csv");
             string line, path, classlabel, pred;
             char separator = ';' ;
-			//pred = to_string(predicted);
 			stringstream newpred;
 			newpred << predicted;
 			pred = newpred.str();
-			//string newpred = stringstream(predicted);
-            //string newpred = _itoa(predicted, buffer, 10);
 
 			
-
+			// Perform prediction based on the label in our CSV
             while (getline(file, line))
             {
                 stringstream liness(line);
@@ -333,18 +302,13 @@ void EigenFace::FaceDetect()
                     getline(liness, names);
 
                     char *cstr = new char[names.length() + 1];
-                    strcpy(cstr, names.c_str());
+                    strcpy(cstr, names.c_str());    
             
-            
-            // Now perform the prediction, see how easy that is:
-            // int prediction = model->predict(face_resized);
-            //  int predictedLabel = model->predict(face_resized);
             // And finally write all we've found out to the original image!
             // First of all draw a green rectangle around the detected face:
             rectangle(original, face_i, CV_RGB(0, 255,0), 1);
+
             // Create the text we will annotate the box with:
-            //  string box_text = format("Prediction = %d", prediction);
-            
             string result_message  = format("Persons Name = %s", cstr);
 			string confidence_message = format("Confidence = %.0f", predicted_confidence);
 
@@ -357,21 +321,19 @@ void EigenFace::FaceDetect()
             putText(original, result_message, Point(pos_x, pos_y), FONT_HERSHEY_PLAIN, 1, CV_RGB(0,255,0), 2);
             putText(original, confidence_message, Point(pos_x + 10, pos_y + 20), FONT_HERSHEY_PLAIN, 1, CV_RGB(0,255,0), 2);
                 }
-                
             }
-                }
+          }
        
         // And display it:by ace.";
         char key = (char) waitKey(20);
         // Exit this loop on escape:
         if(key == 27){
-            //AddNewPerson();
 			break;
 		} else if (key == 116){
 			AddNewPerson();
 		}
 
-
+		string training_text = "Press 't' to train new face, 'Esc' to exit.";
 		putText(original, training_text, Point(20, 20), FONT_HERSHEY_PLAIN, 1, CV_RGB(0,255,0), 2); 
 		// Show the result:
         imshow("face_recognizer", original);
@@ -379,6 +341,11 @@ void EigenFace::FaceDetect()
     
 }
 
+//--------------------------------------------------------
+//--------------------------------------------------------
+//	Small main function to call all of our functions	|
+//--------------------------------------------------------
+//--------------------------------------------------------
 
 int main(int argc, const char *argv[])
 {
