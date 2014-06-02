@@ -1,0 +1,90 @@
+The Eigenface Face Recognition project is just one application of the Open\+C\+V library. This example uses Cascade\+Classifiers and the Eigenface Face Recognizer to detect and recognize faces from a collection of face pictures (our C\+S\+V file). The flow of this application goes something like this\+:
+
+\subsubsection*{Initialize the program by locating files and creating variables}
+
+
+\begin{DoxyEnumerate}
+\item Start program
+\item Locate Haar\+Cascades file, locate .C\+S\+V file
+\item Locate camera
+\item Set up program variables for holding images, names, and labels
+\item Train faces in database
+\item Create a Cascade\+Classifier using the given Haar\+Cascade file (this handles face D\+E\+T\+E\+C\+T\+I\+O\+N)
+\end{DoxyEnumerate}
+
+\subsubsection*{Then call the primary program}
+
+
+\begin{DoxyEnumerate}
+\item Use camera to detect faces in current frame
+\item Crop face from the current frame and compare it to the faces in our collection (the .C\+S\+V file)
+\item Predict the face based on the best confidence value
+\item If you'd like, add the current face on-\/screen to our face collection (will go to the Add\+New\+Person function)
+\end{DoxyEnumerate}
+
+There are also a various checks for errors in the program, which are sprinkled across the program. ~\newline
+~\newline
+~\newline
+ Some quick notes on the setting up of a project through Microsoft Visual Studio 2012\+: 
+\begin{DoxyCode}
+ ----------------------------------------------------
+
+    Project Properties Setup
+
+ ----------------------------------------------------
+
+>Configuration Properties > Additional Library Directories > 
+    .add C:\(\backslash\)opencv\(\backslash\)build\(\backslash\)x86\(\backslash\)vc10\(\backslash\)lib
+    .add C:\(\backslash\)opencv\(\backslash\)build\(\backslash\)x86\(\backslash\)vc11\(\backslash\)lib
+
+>C/C++ > Additional Include Directories >
+    .add C:\(\backslash\)opencv\(\backslash\)build\(\backslash\)include\(\backslash\)opencv2
+    .add C:\(\backslash\)opencv\(\backslash\)build\(\backslash\)include\(\backslash\)opencv
+    .add C:\(\backslash\)opencv\(\backslash\)build\(\backslash\)include\(\backslash\)
+
+>Linker > Additional Include Directories >
+    .add C:\(\backslash\)opencv\(\backslash\)build\(\backslash\)x86\(\backslash\)vc11\(\backslash\)lib
+    .add C:\(\backslash\)opencv\(\backslash\)build\(\backslash\)x86\(\backslash\)vc10\(\backslash\)lib
+
+>Linker > Input >
+    .add opencv\_contrib246.lib
+    .add opencv\_core246.lib
+    .add opencv\_highgui246.lib
+    .add opencv\_imgproc246.lib
+
+
+    Additionally, add these to [Project Properties > Linker > Input > Additional Dependencies];
+
+            opencv\_contrib246.lib
+            opencv\_core246d.lib
+            opencv\_highgui246d.lib
+            opencv\_imgproc246d.lib
+            opencv\_objdetect246d.lib
+            opencv\_video246d.lib
+            opencv\_ml246d.lib
+
+    In the \textcolor{stringliteral}{'Release'} version, add these instead
+
+            opencv\_contrib246.lib
+            opencv\_core246.lib
+            opencv\_highgui246.lib
+            opencv\_imgproc246.lib
+            opencv\_objdetect246.lib
+            opencv\_video246.lib
+            opencv\_ml246.lib
+
+
+----------------------------------------------------
+
+    Notes on the .csv file
+
+----------------------------------------------------
+
+Start with an index 0, format should look like \textcolor{keyword}{this}:
+
+C:\(\backslash\)Users\(\backslash\)MyPC\(\backslash\)Documents\(\backslash\)Visual Studio 2010\(\backslash\)projects\(\backslash\)openCV\_facerec\(\backslash\)x64\(\backslash\)Debug\(\backslash\)img\(\backslash\)image1.jpg;0
+C:\(\backslash\)Users\(\backslash\)MyPC\(\backslash\)Documents\(\backslash\)Visual Studio 2010\(\backslash\)projects\(\backslash\)openCV\_facerec\(\backslash\)x64\(\backslash\)Debug\(\backslash\)img\(\backslash\)image2.jpg;0
+C:\(\backslash\)Users\(\backslash\)MyPC\(\backslash\)Documents\(\backslash\)Visual Studio 2010\(\backslash\)projects\(\backslash\)openCV\_facerec\(\backslash\)x64\(\backslash\)Debug\(\backslash\)img\(\backslash\)image3.jpg;1
+C:\(\backslash\)Users\(\backslash\)MyPC\(\backslash\)Documents\(\backslash\)Visual Studio 2010\(\backslash\)projects\(\backslash\)openCV\_facerec\(\backslash\)x64\(\backslash\)Debug\(\backslash\)img\(\backslash\)image4.jpg;1
+\end{DoxyCode}
+ 

@@ -1,0 +1,85 @@
+/**
+\mainpage Eigenface Face Recognition
+
+The Eigenface Face Recognition project is just one application of the OpenCV library.  This example uses CascadeClassifiers and the Eigenface Face Recognizer to detect and recognize faces from a collection of face pictures (our CSV file).  The flow of this application goes something like this:
+
+ ### Initialize the program by locating files and creating variables #############
+1. Start program
+2. Locate HaarCascades file, locate .CSV file
+3. Locate camera 
+4. Set up program variables for holding images, names, and labels
+5. Train faces in database 
+6. Create a CascadeClassifier using the given HaarCascade file (this handles face DETECTION)
+
+ ### Then call the primary program ##############
+1.  Use camera to detect faces in current frame
+2. Crop face from the current frame and compare it to the faces in our collection (the .CSV file)
+3. Predict the face based on the best confidence value
+4. If you'd like, add the current face on-screen to our face collection (will go to the AddNewPerson function)
+
+There are also a various checks for errors in the program, which are sprinkled across the program.
+<br /><br /><br />
+Some quick notes on the setting up of a project through Microsoft Visual Studio 2012: 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ----------------------------------------------------
+
+	Project Properties Setup
+
+ ----------------------------------------------------
+
+>Configuration Properties > Additional Library Directories > 
+	.add C:\opencv\build\x86\vc10\lib
+	.add C:\opencv\build\x86\vc11\lib
+
+>C/C++ > Additional Include Directories >
+	.add C:\opencv\build\include\opencv2
+	.add C:\opencv\build\include\opencv
+	.add C:\opencv\build\include\
+
+>Linker > Additional Include Directories >
+	.add C:\opencv\build\x86\vc11\lib
+	.add C:\opencv\build\x86\vc10\lib
+
+>Linker > Input >
+	.add opencv_contrib246.lib
+	.add opencv_core246.lib
+	.add opencv_highgui246.lib
+	.add opencv_imgproc246.lib
+
+
+	Additionally, add these to [Project Properties > Linker > Input > Additional Dependencies];
+
+		    opencv_contrib246.lib
+		    opencv_core246d.lib
+		    opencv_highgui246d.lib
+		    opencv_imgproc246d.lib
+		    opencv_objdetect246d.lib
+		    opencv_video246d.lib
+		    opencv_ml246d.lib
+		      
+    In the 'Release' version, add these instead
+      	
+		    opencv_contrib246.lib
+			opencv_core246.lib
+			opencv_highgui246.lib
+			opencv_imgproc246.lib
+			opencv_objdetect246.lib
+			opencv_video246.lib
+			opencv_ml246.lib
+
+
+----------------------------------------------------
+
+	Notes on the .csv file
+
+----------------------------------------------------
+
+Start with an index 0, format should look like this:
+
+C:\Users\MyPC\Documents\Visual Studio 2010\projects\openCV_facerec\x64\Debug\img\image1.jpg;0
+C:\Users\MyPC\Documents\Visual Studio 2010\projects\openCV_facerec\x64\Debug\img\image2.jpg;0
+C:\Users\MyPC\Documents\Visual Studio 2010\projects\openCV_facerec\x64\Debug\img\image3.jpg;1
+C:\Users\MyPC\Documents\Visual Studio 2010\projects\openCV_facerec\x64\Debug\img\image4.jpg;1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*/

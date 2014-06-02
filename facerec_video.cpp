@@ -33,7 +33,9 @@
 using namespace cv;
 using namespace std;
 
-class EigenFace
+/*! Main program for the Eigenface Face Recognition */
+
+class EigenFace 
 {
 public:
     EigenFace();
@@ -45,10 +47,11 @@ public:
 
 EigenFace::EigenFace()
 {
+	/*! Contructor for a new EigenFace object */
     
 }
 
- static void read_csv( const string& filename, vector<Mat>& images, vector<int>& labels, vector<string>& name, char separator = ';')
+static void read_csv( const string& filename, vector<Mat>& images, vector<int>& labels, vector<string>& name, char separator = ';')
     {
     ifstream file(filename.c_str(), ifstream::in);
     if (!file) {
@@ -70,9 +73,12 @@ EigenFace::EigenFace()
     }
     }
 
-
 void EigenFace::AddNewPerson()
 {
+	/*! Code for adding in a new person.  This function takes in a person's name, 
+	captures 10 pictures of them, resizes and stores those pictures, then finally trains 
+	the faces and returns to the main FaceDetect loop.  */
+
     vector<Mat> images;
     vector<int>labels;
     string fn_csv = "img/imagedatabase.csv";
@@ -174,7 +180,8 @@ void EigenFace::AddNewPerson()
 
 void EigenFace::FaceDetect()
 {
-    
+    /*! Handles most of the face detection and recognition code.  This is where most of the program operates in. */
+
     // Check for valid command line arguments, print usage
     // if no arguments were given.
     
