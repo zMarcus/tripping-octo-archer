@@ -1,0 +1,20 @@
+var NAVTREEINDEX0 =
+{
+"annotated.html":[2,0],
+"class_eigen_face.html":[2,0,0],
+"class_eigen_face.html#a35327512641138dd363b58d98673e999":[2,0,0,0],
+"class_eigen_face.html#a41b5bebbc69fae732dc3497fc1a8dec7":[2,0,0,2],
+"class_eigen_face.html#a7be35a4c09bd0e1da3a4850342d55ff5":[2,0,0,1],
+"classes.html":[2,1],
+"facerec__video_8cpp.html":[3,0,0],
+"facerec__video_8cpp.html#ac0f2228420376f4db7e1274f2b41667c":[3,0,0,1],
+"files.html":[3,0],
+"functions.html":[2,2,0],
+"functions_func.html":[2,2,1],
+"globals.html":[3,1,0],
+"globals_func.html":[3,1,1],
+"index.html":[],
+"index.html":[0],
+"md__r_e_a_d_m_e.html":[1],
+"pages.html":[]
+};
