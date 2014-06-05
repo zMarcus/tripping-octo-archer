@@ -38,7 +38,8 @@ using namespace std;
 class EigenFace 
 {
 public:
-    EigenFace();
+    EigenFace(); 
+    static void read_csv(const string& filename, vector<Mat>& images, vector<int>& labels, vector<string>& name, char separator = ';');
     void AddNewPerson();
     void FaceDetect();
 
@@ -53,6 +54,11 @@ EigenFace::EigenFace()
 
 static void read_csv( const string& filename, vector<Mat>& images, vector<int>& labels, vector<string>& name, char separator = ';')
     {
+    	/*! Read in existing CSV file, make sure this is in the correct path in the Visual Studio project directory.
+    		By default this is: "(Project name)/x64/Release/img/imagedatabase.csv"
+    		CSV file should have at least one entry with an label of [0] and end in a blank line.  
+    		The format we will use is "C:\Users\Username\Path\to\Project\x64\release\img\image1.jpg;0;personName"
+    		To go with this, there should also be at least 1 image (dummy or a face) in the directory. */
     ifstream file(filename.c_str(), ifstream::in);
     if (!file) {
         string error_message = "No valid input file was given, please check the given filename.";
